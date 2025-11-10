@@ -1,6 +1,6 @@
 pub fn unfold<T, F>(init: T, next: F) -> Unfold<T, F>
 where
-    F: Fn(&T) -> T,
+    F: FnMut(&T) -> T,
 {
     Unfold { state: init, next }
 }
@@ -12,7 +12,7 @@ pub struct Unfold<T, F> {
 
 impl<T, F> Iterator for Unfold<T, F>
 where
-    F: Fn(&T) -> T,
+    F: FnMut(&T) -> T,
 {
     type Item = T;
 
@@ -25,7 +25,7 @@ where
 
 pub fn try_unfold<T, F>(init: T, next: F) -> TryUnfold<T, F>
 where
-    F: Fn(&T) -> Option<T>,
+    F: FnMut(&T) -> Option<T>,
 {
     let state = Some(init);
     TryUnfold { state, next }
@@ -38,7 +38,7 @@ pub struct TryUnfold<T, F> {
 
 impl<T, F> Iterator for TryUnfold<T, F>
 where
-    F: Fn(&T) -> Option<T>,
+    F: FnMut(&T) -> Option<T>,
 {
     type Item = T;
 
