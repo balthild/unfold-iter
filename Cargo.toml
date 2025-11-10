@@ -1,6 +1,6 @@
 [package]
 name = "unfold-iter"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 license = "MIT"
 description = "Create iterators with an initial value and a recurrence relation."
