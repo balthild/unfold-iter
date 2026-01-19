@@ -1,3 +1,5 @@
+#![no_std]
+
 pub fn unfold<T, F>(init: T, next: F) -> Unfold<T, F>
 where
     F: FnMut(&T) -> T,
@@ -18,7 +20,7 @@ where
 
     fn next(&mut self) -> Option<Self::Item> {
         let next = (self.next)(&self.state);
-        let prev = std::mem::replace(&mut self.state, next);
+        let prev = core::mem::replace(&mut self.state, next);
         Some(prev)
     }
 }
@@ -63,7 +65,7 @@ mod tests {
 
     #[test]
     fn test_try_unfold() {
-        let mut iter = try_unfold(0, |&x| if x < 2 { Some(x + 1) } else { None });
+        let mut iter = try_unfold(0, |&x| (x < 2).then(|| x + 1));
         assert_eq!(iter.next(), Some(0));
         assert_eq!(iter.next(), Some(1));
         assert_eq!(iter.next(), Some(2));
